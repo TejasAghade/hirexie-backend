@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
-
 const dotEnv = require("dotenv");
-
 const mongoose = require("mongoose");
+const cors = require("cors");
+
 
 dotEnv.config();
 
@@ -23,18 +23,29 @@ const routings ={
     auth : require("./routes/auth"),
 }
 
+
+applications = require("./routes/applications"),
+company = require("./routes/company"),
+employer = require("./routes/employer"),
+jobs = require("./routes/jobs"),
+userDetails = require("./routes/userDetails"),
+auth = require("./routes/auth"),
+
 // Middlewares
 app.use(express.json());
 app.use(cors());
 
 // route Middlewares
-app.use("/api/aplications", routings.applications);
-app.use("/api/company", routings.company);
-app.use("/api/employer", routings.employer);
-app.use("/api/jobs", routings.jobs);
-app.use("/api/userDetails", routings.userDetails);
-app.use("/api/auth", routings.auth);
+app.use("/hirable/api/aplications", applications);
+app.use("/hirable/api/auth/", auth);
 
 
 
-app.listen(4000, ()=> console.log("server is up and running on port 4000"));
+
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, function(){
+    console.log(Date.now())
+    console.log("server started on port", PORT);
+})

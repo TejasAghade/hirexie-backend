@@ -1,91 +1,128 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const jobApplicationSchema = new mongoose.Schema({
   applicationId: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   applicationDate: {
     type: Date,
-    default: Date.now
-  },
-  resume: {
-    type: String,
-    required: true
+    default: Date.now,
   },
   companyId: {
     type: String,
-    required: true
+    required: true,
   },
-  companyName: {
+  appliedCompanyName: {
     type: String,
-    required: true
+    required: true,
   },
   applicationStatus: {
     type: String,
-    enum: ['Submitted', 'Under Review', 'Interview Scheduled', 'Rejected', 'Offered', 'Accepted'],
-    default: 'Submitted'
+    enum: [
+      "Submitted",
+      "Under Review",
+      "Interview Scheduled",
+      "Rejected",
+      "Offered",
+      "Accepted",
+    ],
+    default: "Submitted",
   },
   appliedFor: {
     jobId: {
       type: String,
-      required: true
+      required: true,
     },
     jobTitle: {
       type: String,
-      required: true
+      required: true,
     },
     jobDesc: {
       type: String,
-      required: true
+      required: true,
     },
     location: {
       type: String,
-      required: true
+      required: true,
     },
     jobCategory: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   userDetails: {
     userId: {
       type: String,
-      required: true
+      required: true,
     },
     userName: {
       type: String,
-      required: true
+      required: true,
     },
     skills: {
       type: [String],
-      required: true
+      required: true,
     },
     education: {
-      type: [{
-        degree: {
-          type: String,
-          required: true
+      type: [
+        {
+          degree: {
+            type: String,
+            required: true,
+          },
+          institute: {
+            type: String,
+            required: true,
+          },
+          percentage: {
+            type: String,
+            required: true,
+          },
+          yyearear: {
+            type: String,
+            required: true,
+          },
         },
-        institute: {
-          type: String,
-          required: true
+      ],
+      required: true,
+    },
+
+    experience: {
+      type: [
+        {
+          companyName: {
+            type: String,
+            required: false,
+          },
+          position: {
+            type: String,
+            required: false,
+          },
+          joiningDate: {
+            type: Date,
+            required: false,
+          },
+          endDate: {
+            type: Date,
+            required: false,
+          },
         },
-        percentage: {
-          type: String,
-          required: true
-        },
-        year: {
-          type: String,
-          required: true
-        }
-      }],
-      required: true
-    }
-  }
+      ],
+      required: false,
+    },
+    resume: {
+      type: String,
+      required: true,
+    },
+  },
+  isActive: {
+    type: Boolean,
+    required: true,
+  },
 });
 
-const JobApplication = mongoose.model('JobApplication', jobApplicationSchema);
+JobApplicationModel = mongoose.model("job_applications", jobApplicationSchema);
 
-module.exports = JobApplication;
+module.exports = JobApplicationModel;
