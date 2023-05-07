@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const login = async (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
     try {
         const user = await authModel.findOne({
             email: req.body.email,
