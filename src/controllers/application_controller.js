@@ -29,8 +29,8 @@ const get_by_uId = async (req, res) => {
 // controller for to apply for job
 const apply = async (req, res) => {
   const jobApplication = new JobApplicationModel(req.body);
-  let applicationId = uuidv4();
-  jobApplication.applicationId = applicationId;
+  let uId = uuidv4();
+  jobApplication.uId = uId;
   try {
     const appliedApplication = await jobApplication.save();
     res.status(201).json(appliedApplication);
@@ -42,7 +42,7 @@ const apply = async (req, res) => {
 
 
 const update_application = async (req, res) => {
-  const { applicationId } = req.params;
+  const { uId } = req.params;
   // accepting values should be same like request body
   const { applicationStatus, isActive } = req.body;
   let updateFields = {};
@@ -57,7 +57,7 @@ const update_application = async (req, res) => {
   console.log(applicationStatus);
 
   const updatedApplication = await JobApplicationModel.findOneAndUpdate(
-    { applicationId },
+    { uId },
     { $set: updateFields },
     { new: true }
   );

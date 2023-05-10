@@ -1,20 +1,23 @@
 const authModel = require("../models/auth_model");
-const { v4 : uuidv4 } = require("uuid");
+const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 
+const cors = require("cors");
+const express = require("express");
+const app = express();
 
 
 const bcrypt = require("bcrypt");
 
 const login = async (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
+
     try {
         const user = await authModel.findOne({
             email: req.body.email,
             password: req.body.password,
         })
 
-        
+
 
         if (user) {
             console.log(user.email);
@@ -24,12 +27,12 @@ const login = async (req, res) => {
                     email: req.body.email,
                     username: user.userFirstName + " " + user.userLastName,
                     role: user.role,
-                    registrationDate : user.registrationDate
+                    registrationDate: user.registrationDate
                 },
                 "Hirable_user_Authentiction-key321"
             );
 
-            return res.json({ status: "ok", user: token });
+            return res.json({ status: "ok", user: true, token: token });
         } else {
             return res.json({ status: "error", user: false });
         }
@@ -45,7 +48,7 @@ const signup = async (req, res) => {
     const userUId = uuidv4()
     user.uId = userUId;
 
-    
+
 
     try {
 

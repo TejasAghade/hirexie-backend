@@ -5,7 +5,7 @@ const companySchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  companyUid: {
+  uId: {
     type: String,
     required: true,
     unique: true
