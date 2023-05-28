@@ -74,7 +74,7 @@ const userDetailsSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  userUId: {
+  userUid: {
     type: String,
     required: true
   },

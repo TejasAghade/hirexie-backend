@@ -4,10 +4,10 @@ const applicationController = require('../controllers/application_controller');
 // routes
 ApplicationsRouter.get("/getAll", applicationController.get_all);
 
-ApplicationsRouter.get("/getApplicationsByUid/:companyId", applicationController.get_by_uId);
+ApplicationsRouter.get("/getApplicationsByUid/", applicationController.get_by_uId);
 
 ApplicationsRouter.post("/apply/", applicationController.apply);
 
-ApplicationsRouter.patch("/changeStatus/:applicationId", applicationController.update_application);
+ApplicationsRouter.patch("/changeStatus/", applicationController.update_application);
 
 module.exports = ApplicationsRouter;

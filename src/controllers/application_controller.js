@@ -42,7 +42,7 @@ const apply = async (req, res) => {
 
 
 const update_application = async (req, res) => {
-  const { uId } = req.params;
+  const { uId } = req.query.uId;
   // accepting values should be same like request body
   const { applicationStatus, isActive } = req.body;
   let updateFields = {};

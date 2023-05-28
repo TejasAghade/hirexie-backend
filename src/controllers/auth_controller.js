@@ -32,10 +32,38 @@ const login = async (req, res) => {
                 "Hirable_user_Authentiction-key321"
             );
 
-            return res.json({ status: "ok", user: true, token: token });
+            return res.status(200).json({ status: "ok", user: true, token: token });
         } else {
-            return res.json({ status: "error", user: false });
+            return res.status(404).json({ status: "error", user: false });
         }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+async function checkUserExist({ email, uId }) {
+
+    try {
+
+        let user;
+
+        if (email) {
+            user = await authModel.findOne({
+                email: email
+            })
+        }
+        else if (uId) {
+            user = await authModel.findOne({
+                uId: uId
+            })
+        }
+
+        if (user) {
+            return true;
+        } else {
+            return false;
+        }
+
     } catch (error) {
         console.log(error);
     }
@@ -44,24 +72,31 @@ const login = async (req, res) => {
 
 const signup = async (req, res) => {
 
-    const user = await authModel(req.body);
-    const userUId = uuidv4()
-    user.uId = userUId;
 
 
+    if (!checkUserExist({ email: req.body.email})) {
+        const user = await authModel(req.body);
+        const userUId = uuidv4()
+        user.uId = userUId;
 
-    try {
+        try {
 
-        await user.save();
-        res.status(201).json(user);
-    } catch (err) {
-        res.status(400).json({ status: "failed", message: err.message });
+            await user.save();
+            res.status(201).json(user);
+        } catch (err) {
+            res.status(500).json({ status: "failed", message: err.message });
+        }
+    }else{
+        res.status(409).json({status: "user already exist"})
     }
+
+    
 
 
 }
 
 module.exports = {
     login,
-    signup
+    signup,
+    checkUserExist
 };
